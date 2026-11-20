@@ -1,0 +1,40 @@
+# Working notes and the dome kit stay on disk, out of the public repo (house rule).
+/HANDOFF.md
+/docs/
+/CLAUDE.md
+/ConeWebKit/
+/*.zip
+
+# Build output
+/dist/
+tsconfig.tsbuildinfo
+
+# Dependencies
+node_modules/
+**/.yarn/*
+!**/.yarn/releases
+!**/.yarn/patches
+!**/.yarn/plugins
+!**/.yarn/sdks
+!**/.yarn/versions
+.pnp.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+pipeline/.cache/
+
+# Editor / OS / local tooling
+/.vs/
+.vscode/settings.json
+.claude/
+.DS_Store
+*/.DS_Store
+*.log
+
+# Secrets
+.env
+*.env
