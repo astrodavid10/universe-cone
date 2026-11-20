@@ -3,7 +3,7 @@
 **Live:** https://astrodavid10.github.io/universe-cone/
 
 The whole history of the universe as a cone lying on its side: the Big Bang at the tip, today at the wide
-mouth, and the cone's width at each moment the size of the universe. A companion to the INTUITIVE®
+mouth, and the cone's width at each moment the size of the universe. A companion to the *INTUITIVE*®
 Planetarium dome show, it builds the cone in six steps and then morphs to the true scale of time.
 
 1. The Big Bang
@@ -64,7 +64,7 @@ Deep links:
 
 ## Credits
 
-- Concept, design and dome build: A. David Weigel, INTUITIVE® Planetarium, U.S. Space & Rocket Center.
+- Concept, design and dome build: A. David Weigel, *INTUITIVE*® Planetarium, U.S. Space & Rocket Center.
 - Cosmology: flat ΛCDM, Planck 2018 VI (H₀ 67.4, Ωₘ 0.315).
 - CMB: the Planck 2015 SMICA map, ESA and the Planck Collaboration (Planck Legacy Archive). The disc is drawn
   from the map by `pipeline/cmb_disc.py`.
@@ -72,4 +72,3 @@ Deep links:
   - DESI Legacy Imaging Surveys DR10;
   - Pan-STARRS1 Surveys (Chambers et al. 2016);
   - Digitized Sky Survey 2 (STScI; Palomar and UK Schmidt), via CDS hips2fits and the Legacy Surveys viewer.
-- A Cosmic Data Stories interactive.

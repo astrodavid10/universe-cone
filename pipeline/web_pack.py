@@ -34,7 +34,7 @@ SRC = os.path.join(KIT, 'public', 'data', 'cone')
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 WEB_CREDITS = [
-    'Concept, design and dome build: A. David Weigel, INTUITIVE Planetarium, U.S. Space & Rocket Center.',
+    'Concept, design and dome build: A. David Weigel, *INTUITIVE*® Planetarium, U.S. Space & Rocket Center.',
     'Cosmology: flat LCDM, Planck 2018 VI (H0 67.4, Omega_m 0.315).',
     'CMB: Planck 2015 SMICA map, ESA and the Planck Collaboration (Planck Legacy Archive).',
     'Galaxy images (nearby galaxies standing in for every epoch): DESI Legacy Imaging Surveys DR10, Pan-STARRS1 '
@@ -205,6 +205,7 @@ def main():
     M['webb'] = {'file': 'models/jwst.glb', 'units': M['webb']['units'], 'placement': M['webb']['placement']}
 
     M['credits'] = WEB_CREDITS
+    M['author'] = 'A. David Weigel, *INTUITIVE*® Planetarium'
     M['web'] = {
         'packedBy': 'pipeline/web_pack.py',
         'fog': 'R8, emission colour in layers.fog.emission',

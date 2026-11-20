@@ -491,8 +491,15 @@ export interface RayLayer {
   glow: LineMaterial;
   geometry: LineGeometry;
   setMorph(w: number): void;
+  /**
+   * Scale the wave's swing about the cone axis (the data's is +-0.25 ly). The crest SPACING carries the
+   * meaning (the stretch from ultraviolet to infrared); a full-height swing packs the short-wavelength end into
+   * a solid band on small screens.
+   */
+  setAmplitude(f: number): void;
   setReveal(f: number): void;
-  setResolution(w: number, h: number, dpr: number): void;
+  /** `small`: a phone-sized screen, where the wave is drawn thinner still. */
+  setResolution(w: number, h: number, dpr: number, small: boolean): void;
 }
 
 export function buildRay(attrs: Record<string, TypedArray>): RayLayer {
@@ -503,8 +510,9 @@ export function buildRay(attrs: Record<string, TypedArray>): RayLayer {
   const col = new Float32Array(n * 3);
   for (let i = 0; i < n; i++) { for (let k = 0; k < 3; k++) { col[i * 3 + k] = col8[i * 4 + k] / 255; } }
   geometry.setColors(col);
-  const mk = (px: number, opacity: number) => {
-    const m = new LineMaterial({ color: 0xffffff, linewidth: px, vertexColors: true, worldUnits: false });
+  // Widths in CSS px: [desktop, phone].
+  const mk = (px: [number, number], opacity: number) => {
+    const m = new LineMaterial({ color: 0xffffff, linewidth: px[0], vertexColors: true, worldUnits: false });
     // NOT additive: the wave is a tight zigzag near its source (3,600 points), and additively its own
     // overlapping segments sum to white. Normal blending keeps the violet-to-red colour where it crowds.
     m.transparent = true;
@@ -513,36 +521,54 @@ export function buildRay(attrs: Record<string, TypedArray>): RayLayer {
     m.userData.px = px;
     return m;
   };
-  const core = mk(2.2, 1);
-  const glow = mk(7, 0.22);
+  const core = mk([1.1, 0.75], 1);
+  const glow = mk([3.2, 2], 0.16);
   const group = new Group();
-  for (const mat of [glow, core]) {
+  // The wave runs down the cone's axis, so it must read as INSIDE the cone. Normally blended, it would paint
+  // over whatever was drawn before it (ribs, bubbles, fog). So it is drawn FIRST among the transparent layers
+  // (glow, then core), without writing depth: the fog then composites over it, and every additive layer,
+  // in front or behind, adds onto it, as glowing gas around a beam would.
+  [glow, core].forEach((mat, i) => {
     const l = new Line2(geometry, mat);
     l.frustumCulled = false;
+    l.renderOrder = -3 + i;
     group.add(l);
-  }
+  });
   // LineGeometry keeps segment endpoints in one interleaved buffer: [start.xyz, end.xyz] per segment.
   const seg = (geometry.getAttribute("instanceStart") as unknown as { data: { array: Float32Array; needsUpdate: boolean } }).data;
   let lastW = -1;
+  let amp = 1;
   return {
     group, core, glow, geometry,
     setMorph(w: number) {
       if (Math.abs(w - lastW) < 1e-5) { return; }
       lastW = w;
       const a = seg.array;
+      // The wave lies in the x-z plane on the axis (y = z = 0), so its swing is just z.
       for (let i = 0; i < n - 1; i++) {
         for (let k = 0; k < 3; k++) {
-          a[i * 6 + k] = pos[i * 3 + k] + (posT[i * 3 + k] - pos[i * 3 + k]) * w;
-          a[i * 6 + 3 + k] = pos[(i + 1) * 3 + k] + (posT[(i + 1) * 3 + k] - pos[(i + 1) * 3 + k]) * w;
+          const s = k === 2 ? amp : 1;
+          a[i * 6 + k] = (pos[i * 3 + k] + (posT[i * 3 + k] - pos[i * 3 + k]) * w) * s;
+          a[i * 6 + 3 + k] = (pos[(i + 1) * 3 + k] + (posT[(i + 1) * 3 + k] - pos[(i + 1) * 3 + k]) * w) * s;
         }
       }
       seg.needsUpdate = true;
     },
+    setAmplitude(f: number) {
+      if (f === amp) { return; }
+      amp = f;
+      const w = lastW;
+      lastW = -1;
+      this.setMorph(Math.max(0, w));
+    },
     setReveal(f: number) {
       geometry.instanceCount = Math.max(0, Math.min(n - 1, Math.round(f * (n - 1))));
     },
-    setResolution(w: number, h: number, dpr: number) {
-      for (const m of [core, glow]) { m.resolution.set(w, h); m.linewidth = (m.userData.px as number) * dpr; }
+    setResolution(w: number, h: number, dpr: number, small: boolean) {
+      for (const m of [core, glow]) {
+        m.resolution.set(w, h);
+        m.linewidth = (m.userData.px as [number, number])[small ? 1 : 0] * dpr;
+      }
     },
   };
 }

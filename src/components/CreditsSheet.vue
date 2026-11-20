@@ -8,7 +8,7 @@
       <p>
         Picture the whole history of the universe as a cone lying on its side. The Big Bang is at the tip,
         today is at the wide mouth, and the cone's width at any point shows how big the universe was then.
-        This companion to the INTUITIVE® Planetarium show builds it era by era, then shows the true scale of time.
+        This companion to the <em>INTUITIVE</em>® Planetarium show builds it era by era, then shows the true scale of time.
       </p>
       <p>
         Each step is tagged <strong class="t-m">measured</strong>, <strong class="t-o">modeled</strong> or
@@ -36,7 +36,7 @@
         <li>Reionization bubbles, hydrogen fog and particles: schematic.</li>
       </ul>
 
-      <p class="cs-fine">Concept, design and dome build: A. David Weigel, INTUITIVE® Planetarium.</p>
+      <p class="cs-fine">Concept, design and dome build: A. David Weigel, <em>INTUITIVE</em>® Planetarium.</p>
 
       <div class="cs-logos">
         <a
@@ -44,10 +44,6 @@
           rel="noopener" aria-label="INTUITIVE Planetarium at the U.S. Space &amp; Rocket Center"
         >
           <img class="cs-logo-ip" src="../assets/ip-ussrc.png" alt="INTUITIVE Planetarium at the U.S. Space &amp; Rocket Center">
-        </a>
-        <a class="cs-attr" href="https://www.cosmicds.cfa.harvard.edu/" target="_blank" rel="noopener">
-          <img src="../assets/logo_cosmicds.png" alt="CosmicDS">
-          <span>A Cosmic Data Stories interactive</span>
         </a>
       </div>
     </div>
@@ -117,14 +113,10 @@ export default defineComponent({
   font-size: 20px; color: #b9bfe6; cursor: pointer; border-radius: 10px;
   &:focus-visible { outline: 3px solid #ffc66b; }
 }
-.cs-fine { margin: 16px 0 0; font-style: italic; color: #b9bfe6; font-size: 14px; }
+.cs-fine { margin: 16px 0 0; color: #b9bfe6; font-size: 14px; }
 .cs-logos {
   display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 14px; padding-top: 14px;
   border-top: 1px solid rgba(180, 140, 255, 0.2);
 }
 .cs-logo-ip { display: block; max-width: 13rem; height: auto; }
-.cs-attr {
-  display: flex; align-items: center; gap: 10px; color: #dfe3ff !important; text-decoration: none; font-size: 14px;
-  img { width: 28px; height: 28px; object-fit: contain; }
-}
 </style>

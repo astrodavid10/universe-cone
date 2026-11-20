@@ -289,7 +289,7 @@ export class ConeScene {
       this.ray.setMorph(w);
       this.ray.setReveal(st.rayReveal);
       this.ray.core.opacity = st.ray * sh.uExposure.value;
-      this.ray.glow.opacity = 0.22 * st.ray * sh.uExposure.value;
+      this.ray.glow.opacity = 0.16 * st.ray * sh.uExposure.value;
       this.ray.group.visible = st.ray > 0.001 && st.rayReveal > 0;
     }
     // The billion-year rings belong to the true scale: they slide in from bunched to even as the morph runs.
@@ -408,7 +408,9 @@ export class ConeScene {
     this.shared.uPxPerUnit.value = (h * dpr) / (2 * Math.tan((FOV * Math.PI) / 360));
     // Additive layers saturate faster on a small, bright phone screen than on the dome.
     this.shared.uExposure.value = Math.min(w, h) < 520 ? 0.85 : 1;
-    this.ray?.setResolution(w * dpr, h * dpr, dpr);
+    const small = Math.min(w, h) < 520;
+    this.ray?.setResolution(w * dpr, h * dpr, dpr, small);
+    this.ray?.setAmplitude(small ? 0.4 : 0.6);
     this.rig.roll = this.portrait ? -90 : 0;
     const before = this.sideDist;
     const side = this.sidePose();
