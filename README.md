@@ -1,4 +1,4 @@
-# Universe in a Cone
+# History of the Universe
 
 **Live:** https://astrodavid10.github.io/universe-cone/
 

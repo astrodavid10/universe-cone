@@ -11,7 +11,7 @@
     <header ref="top" class="uc-top">
       <div class="uc-brand"><brand-mark :size="44" /></div>
       <div class="uc-title">
-        <h1>Universe in a Cone</h1>
+        <h1>History of the Universe</h1>
         <p class="uc-sub" aria-live="polite">{{ readout }}</p>
       </div>
       <button v-if="!kioskMode" type="button" class="uc-icon" aria-label="Copy a link to this view" @click="share">
@@ -431,7 +431,7 @@ export default defineComponent({
       const url = window.location.href;
       try {
         if (navigator.share && matchMedia("(pointer: coarse)").matches) {
-          await navigator.share({ title: "Universe in a Cone", url });
+          await navigator.share({ title: "History of the Universe", url });
           return;
         }
         await navigator.clipboard.writeText(url);

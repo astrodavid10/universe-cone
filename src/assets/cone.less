@@ -1,4 +1,4 @@
-// Universe in a Cone: base reset + theme.
+// History of the Universe: base reset + theme.
 // Palette from the cone itself: the warm Big Bang flare (#ffe6bf / #ffc66b) is the accent, the fog's violet
 // and the first stars' blue are the panel tints. Legibility floor as in Voyager: body 16 px, nothing under
 // 12 px (labels on phones excepted at 11 px sub-lines), 44-48 px touch targets.
@@ -110,7 +110,10 @@ body.kiosk-mode { overscroll-behavior: none; -webkit-touch-callout: none; user-s
   .uc-body:not(.open), .uc-extra:not(.open) { display: none; }
   .uc-panel h2 { font-size: 18px; }
   .uc-detail { font-size: 15px; }
-  .uc-title h1 { font-size: 17px; letter-spacing: 0.08em; }
+  // "HISTORY OF THE UNIVERSE" in spaced capitals doesn't fit beside three 44 px buttons on a phone.
+  .uc-title h1 { font-size: 17px; letter-spacing: 0; text-transform: none; }
+  .uc-top { gap: 6px; padding-left: 8px; padding-right: 8px; }
+  .uc-icon { width: 40px; height: 40px; font-size: 18px; }
   .uc-title .uc-sub { font-size: 13px; }
   .uc-more { display: inline-block; margin-top: 2px; padding: 4px 0; font-size: 14px; color: var(--accent); min-height: 32px; }
 }
