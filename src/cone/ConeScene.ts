@@ -490,9 +490,14 @@ export class ConeScene {
       if (t.id === "T") { op *= smooth((w - 0.72) / 0.25); }
       if (hideAll || (onlyNear && t.id !== "6" && t.id !== "S")) { op = 0; }
       if (t.id === "S" && !this.webb) { op = 0; }
-      if (op < 0.02) { continue; }
       this.tmpA.set(t.story[0] + (t.true[0] - t.story[0]) * w, t.story[1] + (t.true[1] - t.story[1]) * w,
         t.story[2] + (t.true[2] - t.story[2]) * w);
+      // The Big Bang view looks up the cone from beside the tip: the far end's labels (Galaxies grow, Today,
+      // the telescope) all project near the vanishing point and pile up. This view is about the young
+      // universe, so it labels only the young half (anchor x < 0), fading out over the next 1.5 ly. The
+      // mirror of the dome's Look Back rule, which keeps only Today and the telescope.
+      if (this.view === "bigbang") { op *= 1 - smooth(this.tmpA.x / 1.5); }
+      if (op < 0.02) { continue; }
       this.tmpB.copy(this.tmpA).add(this.tmpV.set(...t.cardOffset));
       if (!this.project(this.tmpA, sa) || !this.project(this.tmpB.clone(), sb)) { continue; }
       out.push({ id: t.id, text: t.text, sub: t.sub, theme: t.theme, x: sb.x, y: sb.y, ax: sa.x, ay: sa.y, opacity: op });
